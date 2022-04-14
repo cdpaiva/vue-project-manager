@@ -22,6 +22,13 @@ const getKanbanById = (id) =>
         .get(`${baseURL}/${id}`)
         .then(res => res.data.kanban)
 
-const projectService = { getAll, getById, getAmount, getKanbanById }
+const create = (newProject) =>
+    axios
+        .post(baseURL,newProject)
+
+const remove = (id) =>
+    axios.delete(`${baseURL}/${id}`)
+
+const projectService = { getAll, getById, getAmount, getKanbanById, create, remove }
 
 export default projectService

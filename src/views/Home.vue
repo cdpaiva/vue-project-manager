@@ -6,6 +6,7 @@
         :numberOfProjects="numberOfProjects"
         :numberOfTags="numberOfTags"
       />
+      <router-link to="/new-project">Add new Project</router-link>
       <project-list :projects="projects" />
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 import Home from '../views/Home.vue'
 import Kanban from '../views/Kanban.vue'
+import NewProject from '../views/NewProject.vue'
 
 const routes = [
     { 
@@ -11,6 +12,10 @@ const routes = [
         path:'/kanban/:id',
         component: Kanban,
         props: (route) => ({id: parseInt(route.params.id)})
+    },
+    {
+        path: '/new-project',
+        component: NewProject
     }
 ]
 

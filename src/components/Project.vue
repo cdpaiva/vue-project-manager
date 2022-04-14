@@ -16,7 +16,7 @@
           <div class="h-full flex flex-col justify-between">
             <div class="flex justify-end gap-2">
               <button class="btn-yellow">Edit</button>
-              <button class="btn-red">Delete</button>
+              <button class="btn-red" @click="remove(project.id)">Delete</button>
             </div>
             <div class="flex justify-end">
               <button class="btn-blue" @click="showDetails = !showDetails">
@@ -39,6 +39,7 @@
 
 <script>
 import Tag from "./Tag.vue";
+import projectService from "../service/projects.js"
 
 export default {
   props: {
@@ -52,6 +53,14 @@ export default {
       showDetails: false,
     };
   },
+  methods: {
+    remove(id) {
+      if(confirm(`Please confirm deletion of ${this.project.name}`)){
+        projectService.remove(id)
+        //TODO: update the screen once a project is removed
+      }
+    }
+  }
 };
 </script>
 
