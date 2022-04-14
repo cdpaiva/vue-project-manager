@@ -7,6 +7,6 @@ const get = () =>
         .get(baseURL)
         .then(res => res.data)
 
-const users = {get}
+const userService = {get}
 
-export default users
+export default userService

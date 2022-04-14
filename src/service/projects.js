@@ -17,6 +17,11 @@ const getById = (id) =>
         .get(`${baseURL}/${id}`)
         .then(res => res.data)
 
-const projects = { getAll, getById, getAmount }
+const getKanbanById = (id) => 
+    axios
+        .get(`${baseURL}/${id}`)
+        .then(res => res.data.kanban)
 
-export default projects
+const projectService = { getAll, getById, getAmount, getKanbanById }
+
+export default projectService
