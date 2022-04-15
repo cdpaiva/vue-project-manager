@@ -1,5 +1,5 @@
 <template>
-  <h2>New Project form page</h2>
+  <h2>Edit</h2>
   <div class="flex flex-col items-center">
     <form class="w-full max-w-lg">
       <div>
@@ -109,9 +109,9 @@
         mt-4
         hover:bg-slate-500 hover:text-white hover:border-slate-500
       "
-      @click.prevent="createProject"
+      @click.prevent="updateProject"
     >
-      Create project
+      Update project
     </button>
     <div>
       <p>Project being created with:</p>
@@ -129,19 +129,35 @@
 import projectService from '../service/projects.js'
 
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
-      //TODO: remove initial values that are here just for debbuging
-      name: "React Project",
-      outline: "Small project using functional components",
-      description: "Creates a CRUD application for phone contacts",
-      inspiration: "Full Stack Helsinki Open Course 2022",
+      name: "",
+      outline: "",
+      description: "",
+      inspiration: "",
       tag: "",
-      tags: ["React", "CRUD", "Functional Components"],
-      dateOfCreation: "15-04-2022",
+      tags: "",
+      dateOfCreation: ""
     };
   },
+  mounted() {
+    projectService.getById(this.id).then(p => this.fillForm(p))
+  },
   methods: {
+    fillForm(project) {
+      this.name = project.name
+      this.outline = project.outline
+      this.description = project.description
+      this.inspiration = project.inspiration
+      this.tags = project.tags
+      this.dateOfCreation = project.dateOfCreation
+    },
     addTag() {
       this.tags.push(this.tag);
       this.tag = "";
@@ -150,17 +166,17 @@ export default {
       this.tags = this.tags.filter((t) => t !== tag);
       this.tag = "";
     },
-    createProject() {
+    updateProject() {
       const project = {
         name: this.name,
         outline: this.outline,
         description: this.description,
         inspiration: this.inspiration,
         tags: this.tags,
-        progress: 0,
+        percentage: 0,
         dateOfCreation: this.dateOfCreation,
       };
-      projectService.create(project)
+      projectService.update(this.id, project)
     },
   },
 };

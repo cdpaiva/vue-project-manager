@@ -15,7 +15,7 @@
         <div class="flex-1">
           <div class="h-full flex flex-col justify-between">
             <div class="flex justify-end gap-2">
-              <button class="btn-yellow">Edit</button>
+              <router-link :to="`/edit-project/${project.id}`" class="btn-yellow">Edit</router-link>
               <button class="btn-red" @click="remove(project.id)">Delete</button>
             </div>
             <div class="flex justify-end">

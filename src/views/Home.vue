@@ -40,7 +40,6 @@ export default {
       userService.get().then((res) => (this.userName = res.name));
     },
     updateList(id) {
-      console.log("Reached Home, with id", id);
       this.projects = this.projects.filter((p) => p.id !== id);
     },
   },

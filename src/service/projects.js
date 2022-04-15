@@ -29,6 +29,9 @@ const create = (newProject) =>
 const remove = (id) =>
     axios.delete(`${baseURL}/${id}`)
 
-const projectService = { getAll, getById, getAmount, getKanbanById, create, remove }
+const update = (id, updatedProject) =>
+    axios.put(`${baseURL}/${id}`, updatedProject)
+
+const projectService = { getAll, getById, getAmount, getKanbanById, create, remove, update }
 
 export default projectService
