@@ -48,6 +48,9 @@ export default {
   components: {
     Tag,
   },
+  emits: [
+    'updateList'
+  ],
   data() {
     return {
       showDetails: false,
@@ -56,8 +59,9 @@ export default {
   methods: {
     remove(id) {
       if(confirm(`Please confirm deletion of ${this.project.name}`)){
-        projectService.remove(id)
-        //TODO: update the screen once a project is removed
+        projectService
+          .remove(id)
+          .then(() => this.$emit('updateList',id))
       }
     }
   }

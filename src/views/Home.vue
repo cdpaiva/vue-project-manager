@@ -6,8 +6,10 @@
         :numberOfProjects="numberOfProjects"
         :numberOfTags="numberOfTags"
       />
-      <router-link to="/new-project">Add new Project</router-link>
-      <project-list :projects="projects" />
+      <div class="flex justify-center mb-4">
+        <router-link class="text-center border-solid border-2 border-slate-400 bg-slate-300 p-4 w-1/4 hover:bg-slate-700 hover:text-white" to="/new-project">Add new Project</router-link>
+      </div>
+      <project-list :projects="projects" @updateList="updateList" />
     </div>
   </div>
 </template>
@@ -26,26 +28,29 @@ export default {
   data() {
     return {
       projects: [],
-      userName: ''
+      userName: "",
     };
   },
   created() {
-    projectService
-      .getAll()
-      .then((projects) => (this.projects = projects));
-    userService
-      .get()
-      .then((res) => (this.userName = res.name));
+    this.getData();
+  },
+  methods: {
+    getData() {
+      projectService.getAll().then((projects) => (this.projects = projects));
+      userService.get().then((res) => (this.userName = res.name));
+    },
+    updateList(id) {
+      console.log("Reached Home, with id", id);
+      this.projects = this.projects.filter((p) => p.id !== id);
+    },
   },
   computed: {
     numberOfProjects() {
-      return this.projects.length
+      return this.projects.length;
     },
     numberOfTags() {
-      return this.projects.reduce(
-                (tags,p) => tags+=p.tags.length
-                ,0)
-    }
-  }
+      return this.projects.reduce((tags, p) => (tags += p.tags.length), 0);
+    },
+  },
 };
 </script>

@@ -131,13 +131,14 @@ import projectService from '../service/projects.js'
 export default {
   data() {
     return {
-      name: "",
-      outline: "",
-      description: "",
-      inspiration: "",
+      //TODO: remove initial values that are here just for debbuging
+      name: "React Project",
+      outline: "Small project using functional components",
+      description: "Creates a CRUD application for phone contacts",
+      inspiration: "Full Stack Helsinki Open Course 2022",
       tag: "",
-      tags: [],
-      dateOfCreation: null,
+      tags: ["React", "CRUD", "Functional Components"],
+      dateOfCreation: "15-04-2022",
     };
   },
   methods: {
