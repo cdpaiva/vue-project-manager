@@ -1,5 +1,5 @@
 <template>
-    <div class="m-8 flex flex-col items-center">
+    <div class="m-4 flex flex-col items-center">
         
         <h2 class="text-2xl">Welcome {{userName}}</h2>
 

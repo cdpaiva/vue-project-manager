@@ -7,7 +7,7 @@
         :numberOfTags="numberOfTags"
       />
       <div class="flex justify-center mb-4">
-        <router-link class="text-center border-solid border-2 border-slate-400 bg-slate-300 p-4 w-1/4 hover:bg-slate-700 hover:text-white" to="/new-project">Add new Project</router-link>
+        <router-link class="text-center border-solid border-2 border-slate-400 bg-slate-300 p-4 w-1/4 hover:bg-slate-700 hover:text-white" to="/new-project">Add New Project</router-link>
       </div>
       <project-list :projects="projects" @updateList="updateList" />
     </div>
