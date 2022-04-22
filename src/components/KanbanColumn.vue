@@ -2,7 +2,7 @@
   <div class="w-96 gap-2 border-2 border-slate-300">
     <div class="flex justify-around">
       <slot></slot>
-      <button>Add new</button>
+      <button @click="displayNewTaskOverlay">Add new</button>
     </div>
     <div v-for="(task, index) in tasks" :key="index">
       <KanbanTask :task=task @increase-status="increaseStatus" @decrease-status="decreaseStatus" />
@@ -22,7 +22,8 @@ export default {
   },
   emits: [
     'increaseStatus',
-    'decreaseStatus'
+    'decreaseStatus',
+    'displayNewTaskOverlay'
   ],
   methods: {
     increaseStatus(id) {
@@ -30,6 +31,9 @@ export default {
     },
     decreaseStatus(id) {
       this.$emit("decreaseStatus", id)
+    },
+    displayNewTaskOverlay() {
+      this.$emit("displayNewTaskOverlay")
     }
   }
 };

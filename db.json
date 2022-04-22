@@ -14,29 +14,7 @@
       "dateOfCreation": "03/16/2022",
       "description": "A project so that I don't lose track of my ideas and organize current activities in each project.",
       "inspiration": "Creating my own management tool will hopefully provide several insights on how to properly manage my projects.",
-      "progress": 0.75,
-      "kanban": [
-        {
-          "id": 0,
-          "status": "todo",
-          "task": "Create kanban board page"
-        },
-        {
-          "id": 1,
-          "status": "inProgress",
-          "task": "Create initial page"
-        },
-        {
-          "id": 2,
-          "status": "done",
-          "task": "Create requisites document"
-        },
-        {
-          "id": 3,
-          "status": "done",
-          "task": "Create low fidelity prototypes"
-        }
-      ]
+      "progress": 0.75
     },
     {
       "id": 1,
@@ -50,29 +28,7 @@
       "dateOfCreation": "03/01/2022",
       "description": "The city/country weather condition is retrieved from WebWeatherAPI and presented with corresponding images to the user.",
       "inspiration": "Video tutorial (GET SOURCE LATER)",
-      "progress": 0.9,
-      "kanban": [
-        {
-          "id": 0,
-          "status": "todo",
-          "task": "Add tests to check API response"
-        },
-        {
-          "id": 1,
-          "status": "todo",
-          "task": "Create field to user insert his/hers own key"
-        },
-        {
-          "id": 2,
-          "status": "done",
-          "task": "Create page"
-        },
-        {
-          "id": 3,
-          "status": "done",
-          "task": "Use axios to manage the requests"
-        }
-      ]
+      "progress": 0.9
     },
     {
       "id": 2,
@@ -86,29 +42,95 @@
       "dateOfCreation": "02/26/2022",
       "description": "A puzzle slider. Users can select the image to play. Top scores will be recorded into a leaderboard.",
       "inspiration": "Get book name later",
-      "progress": 0.8,
-      "kanban": [
-        {
-          "id": 0,
-          "status": "inProgress",
-          "task": "Review components"
-        },
-        {
-          "id": 1,
-          "status": "done",
-          "task": "Assets acquired"
-        },
-        {
-          "id": 2,
-          "status": "done",
-          "task": "Tests implemented"
-        },
-        {
-          "id": 3,
-          "status": "done",
-          "task": "Fix bugs regarding game time"
-        }
-      ]
+      "progress": 0.8
+    },
+    {
+      "name": "React Project",
+      "outline": "Small project using functional components",
+      "description": "Creates a CRUD application for phone contacts",
+      "inspiration": "Full Stack Helsinki Open Course 2022",
+      "tags": [
+        "React",
+        "CRUD",
+        "Functional Components"
+      ],
+      "progress": 0,
+      "dateOfCreation": "15-04-2022",
+      "id": 3
+    }
+  ],
+  "tasks": [
+    {
+      "id": 0,
+      "status": "todo",
+      "task": "Create kanban board page",
+      "project": 0
+    },
+    {
+      "id": 1,
+      "status": "inProgress",
+      "task": "Create initial page",
+      "project": 0
+    },
+    {
+      "id": 2,
+      "status": "done",
+      "task": "Create requisites document",
+      "project": 0
+    },
+    {
+      "id": 3,
+      "status": "done",
+      "task": "Create low fidelity prototypes",
+      "project": 0
+    },
+    {
+      "id": 4,
+      "status": "todo",
+      "task": "Add tests to check API response",
+      "project": 1
+    },
+    {
+      "id": 5,
+      "status": "todo",
+      "task": "Create field to user insert his/hers own key",
+      "project": 1
+    },
+    {
+      "id": 6,
+      "status": "done",
+      "task": "Create page",
+      "project": 1
+    },
+    {
+      "id": 7,
+      "status": "done",
+      "task": "Use axios to manage the requests",
+      "project": 1
+    },
+    {
+      "id": 8,
+      "status": "inProgress",
+      "task": "Review components",
+      "project": 2
+    },
+    {
+      "id": 9,
+      "status": "done",
+      "task": "Assets acquired",
+      "project": 2
+    },
+    {
+      "id": 10,
+      "status": "done",
+      "task": "Tests implemented",
+      "project": 2
+    },
+    {
+      "id": 11,
+      "status": "done",
+      "task": "Fix bugs regarding game time",
+      "project": 2
     }
   ]
 }

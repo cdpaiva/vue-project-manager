@@ -32,6 +32,17 @@ const remove = (id) =>
 const update = (id, updatedProject) =>
     axios.put(`${baseURL}/${id}`, updatedProject)
 
-const projectService = { getAll, getById, getAmount, getKanbanById, create, remove, update }
+const createTask = (id, task) => {
+    axios
+        .get(`${baseURL}/${id}`)
+        .then(res => {
+            const project = res.data
+            task['id'] = project.kanban.length
+            project.kanban.push(task)
+            update(id, project)
+        })
+}
+
+const projectService = { getAll, getById, getAmount, getKanbanById, create, remove, update, createTask }
 
 export default projectService
