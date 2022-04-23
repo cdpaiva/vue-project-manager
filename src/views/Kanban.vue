@@ -1,44 +1,7 @@
 <template>
   <div class="flex flex-col items-center w-full">
     <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
-    <div
-      class="absolute left-1/4 top-1/4 w-1/2 bg-amber-600"
-      v-if="displayOverlay"
-    >
-      <h3>Add new task</h3>
-      <form>
-        <label for="task">Task Name</label>
-        <input type="text" id="task" v-model="taskName" />
-        <div class="block">
-          <label for="todo"> Todo</label>
-          <input
-            type="radio"
-            id="todo"
-            name="task"
-            value="todo"
-            v-model="taskStatus"
-          />
-          <label for="inProgress"> In Progress</label>
-          <input
-            type="radio"
-            id="inProgress"
-            name="task"
-            value="inProgress"
-            v-model="taskStatus"
-          />
-          <label for="done"> Done</label>
-          <input
-            type="radio"
-            id="done"
-            name="task"
-            value="done"
-            v-model="taskStatus"
-          />
-        </div>
-        <button @click="createTask">Create Task</button>
-        <button @click="displayOverlay = false">Cancel</button>
-      </form>
-    </div>
+    <new-task v-if="displayOverlay" @createTask="createTask" @close="displayOverlay=false" />
     <div class="flex gap-6">
       <KanbanColumn
         :tasks="todo"
@@ -70,12 +33,14 @@
 
 <script>
 import KanbanColumn from "../components/KanbanColumn.vue";
+import NewTask from "../components/NewTask.vue";
 import taskService from "../service/tasks";
 import projectService from "../service/projects";
 
 export default {
   components: {
     KanbanColumn,
+    NewTask,
   },
   props: {
     id: {
@@ -140,12 +105,8 @@ export default {
       this.taskName = "";
       this.status = "todo";
     },
-    createTask() {
-      let newTask = {
-        task: this.taskName,
-        status: this.taskStatus,
-        project: this.id,
-      };
+    createTask(task) {
+      let newTask = { project: this.id, ...task };
       taskService.create(newTask).then((t) => {
         this.kanban.push(t);
         this.cleanTaskForm();
@@ -154,8 +115,8 @@ export default {
     removeTask(id) {
       taskService
         .remove(id)
-        .then(() => this.kanban = this.kanban.filter(k => k.id !== id))
-    }
+        .then(() => (this.kanban = this.kanban.filter((k) => k.id !== id)));
+    },
   },
 };
 </script>
