@@ -1,4 +1,5 @@
 import axios from "axios"
+import taskService from "./tasks"
 
 const baseURL = 'http://localhost:3001/projects'
 
@@ -26,8 +27,14 @@ const create = (newProject) =>
     axios
         .post(baseURL,newProject)
 
-const remove = (id) =>
-    axios.delete(`${baseURL}/${id}`)
+const remove = (id) => {
+    taskService
+    .getByProjectId(id)
+    .then((res) => {
+        res.map(task => taskService.remove(task.id))
+    })
+    return axios.delete(`${baseURL}/${id}`)
+}
 
 const update = (id, updatedProject) =>
     axios.put(`${baseURL}/${id}`, updatedProject)
