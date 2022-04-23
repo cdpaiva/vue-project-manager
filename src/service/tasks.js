@@ -12,6 +12,14 @@ const getByProjectId = (id) =>
         .get(baseURL)
         .then(res => res.data.filter(p=>p.project===id))
 
-const taskService = { getById, getByProjectId }
+const create = (task) => 
+    axios
+        .post(baseURL, task)
+        .then(res => res.data)
+
+const remove = (id) => 
+    axios.delete(`${baseURL}/${id}`)
+
+const taskService = { getById, getByProjectId, create, remove }
 
 export default taskService

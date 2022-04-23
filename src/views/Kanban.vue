@@ -8,17 +8,35 @@
       <h3>Add new task</h3>
       <form>
         <label for="task">Task Name</label>
-        <input type="text" id="task" v-model="taskName"/>
+        <input type="text" id="task" v-model="taskName" />
         <div class="block">
           <label for="todo"> Todo</label>
-          <input type="radio" id="todo" name="task" value="todo" v-model="taskStatus" />
+          <input
+            type="radio"
+            id="todo"
+            name="task"
+            value="todo"
+            v-model="taskStatus"
+          />
           <label for="inProgress"> In Progress</label>
-          <input type="radio" id="inProgress" name="task" value="inProgress" v-model="taskStatus" />
+          <input
+            type="radio"
+            id="inProgress"
+            name="task"
+            value="inProgress"
+            v-model="taskStatus"
+          />
           <label for="done"> Done</label>
-          <input type="radio" id="done" name="task" value="done" v-model="taskStatus" />
+          <input
+            type="radio"
+            id="done"
+            name="task"
+            value="done"
+            v-model="taskStatus"
+          />
         </div>
         <button @click="createTask">Create Task</button>
-        <button @click="displayOverlay=false">Cancel</button>
+        <button @click="displayOverlay = false">Cancel</button>
       </form>
     </div>
     <div class="flex gap-6">
@@ -27,6 +45,7 @@
         @increase-status="increaseStatus"
         @decreaseStatus="decreaseStatus"
         @displayNewTaskOverlay="displayNewTaskOverlay"
+        @removeTask="removeTask"
         >Todo</KanbanColumn
       >
       <KanbanColumn
@@ -34,6 +53,7 @@
         @increase-status="increaseStatus"
         @decreaseStatus="decreaseStatus"
         @displayNewTaskOverlay="displayNewTaskOverlay"
+        @removeTask="removeTask"
         >In Progress</KanbanColumn
       >
       <KanbanColumn
@@ -41,6 +61,7 @@
         @increase-status="increaseStatus"
         @decreaseStatus="decreaseStatus"
         @displayNewTaskOverlay="displayNewTaskOverlay"
+        @removeTask="removeTask"
         >Done</KanbanColumn
       >
     </div>
@@ -68,14 +89,12 @@ export default {
       projectName: "",
       displayOverlay: false,
       taskStatus: "todo",
-      taskName: ""
+      taskName: "",
     };
   },
   created() {
-    taskService.getByProjectId(this.id).then(k => this.kanban = k)
-    projectService
-      .getById(this.id)
-      .then((p) => (this.projectName = p.name));
+    taskService.getByProjectId(this.id).then((k) => (this.kanban = k));
+    projectService.getById(this.id).then((p) => (this.projectName = p.name));
   },
   computed: {
     todo() {
@@ -116,16 +135,26 @@ export default {
     displayNewTaskOverlay() {
       this.displayOverlay = true;
     },
+    cleanTaskForm() {
+      this.displayOverlay = false;
+      this.taskName = "";
+      this.status = "todo";
+    },
     createTask() {
       let newTask = {
         task: this.taskName,
-        status: this.taskStatus
-      }
-      projectService
-        .createTask(this.id, newTask)
-      
-      projectService.getKanbanById(this.id).then((k) => (this.kanban = k))
-
+        status: this.taskStatus,
+        project: this.id,
+      };
+      taskService.create(newTask).then((t) => {
+        this.kanban.push(t);
+        this.cleanTaskForm();
+      });
+    },
+    removeTask(id) {
+      taskService
+        .remove(id)
+        .then(() => this.kanban = this.kanban.filter(k => k.id !== id))
     }
   },
 };

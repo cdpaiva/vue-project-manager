@@ -5,7 +5,7 @@
       <button @click="displayNewTaskOverlay">Add new</button>
     </div>
     <div v-for="(task, index) in tasks" :key="index">
-      <KanbanTask :task=task @increase-status="increaseStatus" @decrease-status="decreaseStatus" />
+      <KanbanTask :task=task @increase-status="increaseStatus" @decrease-status="decreaseStatus" @removeTask="removeTask" />
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
   emits: [
     'increaseStatus',
     'decreaseStatus',
-    'displayNewTaskOverlay'
+    'displayNewTaskOverlay',
+    'removeTask'
   ],
   methods: {
     increaseStatus(id) {
@@ -34,6 +35,9 @@ export default {
     },
     displayNewTaskOverlay() {
       this.$emit("displayNewTaskOverlay")
+    },
+    removeTask(id) {
+      this.$emit("removeTask", id)
     }
   }
 };

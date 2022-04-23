@@ -2,7 +2,7 @@
   <div class="border-2 border-slate-800 m-2">
     <div :class="cardTopStyle">
       <div class="text-sm font-bold pl-2">{{ task.id + 1 }}</div>
-      <button class="btn-close">X</button>
+      <button class="btn-close" @click="removeTask">X</button>
     </div>
     <div class="p-2 pb-0">
       {{ task.task }}
@@ -40,7 +40,7 @@ export default {
   props: {
     task: Object,
   },
-  emits: ["increaseStatus", "decreaseStatus"],
+  emits: ["increaseStatus", "decreaseStatus", "removeTask"],
   computed: {
     cardTopStyle() {
       const bgColors = {
@@ -58,6 +58,9 @@ export default {
     decreaseStatus() {
       this.$emit("decreaseStatus", this.task.id);
     },
+    removeTask() {
+      this.$emit("removeTask", this.task.id)
+    }
   },
 };
 </script>
