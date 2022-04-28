@@ -7,7 +7,7 @@
           <p>{{ project.outline }}</p>
           <div class="flex">
             <div v-for="tag in project.tags" :key="tag">
-              <tag :name="`${tag}`" />
+              <Tag :name="`${tag}`" />
             </div>
           </div>
         </div>
@@ -33,6 +33,7 @@
       <p>Description: {{ project.description }}</p>
       <p>Idea came from: {{ project.inspiration }}</p>
       <p>Percentage completed: {{ project.progress * 100 }}%</p>
+      <p>Date of creation: {{ project.dateOfCreation }}</p>
     </div>
   </div>
 </template>
