@@ -8,6 +8,7 @@
       bg-slate-200
       w-1/2
       p-2
+      z-20
     "
   >
     <h3 class="text-center font-extrabold text-2xl text-gray-700">

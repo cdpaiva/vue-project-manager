@@ -1,7 +1,8 @@
 <template>
+  <div class="absolute w-full h-full z-10 bg-slate-600/75" v-if="displayOverlay"></div>
   <div class="flex flex-col items-center w-full">
     <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
-    <new-task v-if="displayOverlay" @createTask="createTask" @close="displayOverlay=false" />
+    <new-task v-if="displayOverlay" @createTask="createTask" @close="cleanTaskForm" />
     <div class="flex gap-6">
       <KanbanColumn
         :tasks="todo"
@@ -54,7 +55,7 @@ export default {
       projectName: "",
       displayOverlay: false,
       taskStatus: "todo",
-      taskName: "",
+      taskName: ""
     };
   },
   created() {
