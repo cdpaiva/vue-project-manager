@@ -11,7 +11,7 @@
         "vue-router",
         "tailwind.css"
       ],
-      "dateOfCreation": "03/16/2022",
+      "dateOfCreation": "16-03-2022",
       "description": "A project so that I don't lose track of my ideas and organize current activities in each project.",
       "inspiration": "Creating my own management tool will hopefully provide several insights on how to properly manage my projects.",
       "progress": 0.75
@@ -25,7 +25,7 @@
         "axios",
         "bulma"
       ],
-      "dateOfCreation": "03/01/2022",
+      "dateOfCreation": "01-03-2022",
       "description": "The city/country weather condition is retrieved from WebWeatherAPI and presented with corresponding images to the user.",
       "inspiration": "Video tutorial (GET SOURCE LATER)",
       "progress": 0.9
@@ -39,7 +39,7 @@
         "memory-storage",
         "moment.js"
       ],
-      "dateOfCreation": "02/26/2022",
+      "dateOfCreation": "26-02-2022",
       "description": "A puzzle slider. Users can select the image to play. Top scores will be recorded into a leaderboard.",
       "inspiration": "Get book name later",
       "progress": 0.8
@@ -53,7 +53,7 @@
         "React",
         "CRUD"
       ],
-      "percentage": 0,
+      "progress": 0,
       "dateOfCreation": "15-04-2022",
       "id": 3
     }

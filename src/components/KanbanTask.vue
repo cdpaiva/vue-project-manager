@@ -1,16 +1,15 @@
 <template>
   <div class="border-2 border-slate-800 m-2">
     <div :class="cardTopStyle">
-      <div class="text-sm font-bold pl-2">{{ task.id + 1 }}</div>
-      <button class="btn-close" @click="removeTask">X</button>
+      <button class="btn-close font-bold mr-2" @click="removeTask">X</button>
     </div>
     <div class="p-2 pb-0">
       {{ task.task }}
     </div>
     <div class="flex justify-around p-2">
       <button
-        v-if="task.status == 'inProgress'"
-        class="btn-red"
+        v-if="task.status==='inProgress'"
+        class="btn-cancel"
         @click="decreaseStatus"
       >
         Pause
@@ -18,19 +17,19 @@
 
       <button
         v-if="task.status == 'todo'"
-        class="btn-red"
+        class="btn"
         @click="increaseStatus"
       >
         Start
       </button>
       <button
         v-else-if="task.status == 'inProgress'"
-        class="btn-red"
+        class="btn"
         @click="increaseStatus"
       >
         Finish
       </button>
-      <button v-else class="btn-red" @click="decreaseStatus">Return</button>
+      <button v-else class="btn-cancel" @click="decreaseStatus">Return</button>
     </div>
   </div>
 </template>
@@ -48,7 +47,7 @@ export default {
         inProgress: "bg-blue-300",
         done: "bg-green-300",
       };
-      return `flex justify-between h-6 ${bgColors[this.task.status]}`;
+      return `flex justify-end h-6 ${bgColors[this.task.status]}`;
     },
   },
   methods: {
@@ -66,13 +65,16 @@ export default {
 </script>
 
 <style scoped>
-.btn-close {
-  @apply text-gray-600 px-2;
+.btn-cancel {
+  @apply border-yellow-500 border-2 font-bold py-1 px-2 rounded;
 }
-.btn-red {
-  @apply bg-red-500 text-white font-bold py-1 px-2 rounded;
+.btn-cancel:hover {
+  @apply hover:bg-yellow-500 text-white;
 }
-.btn-red:hover {
-  @apply hover:bg-red-700;
+.btn {
+  @apply border-blue-700 border-2 font-bold py-1 px-2 rounded;
+}
+.btn:hover {
+  @apply hover:bg-blue-700 text-white;
 }
 </style>
