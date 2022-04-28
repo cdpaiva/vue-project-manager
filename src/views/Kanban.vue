@@ -1,8 +1,15 @@
 <template>
-  <div class="absolute w-full h-full z-10 bg-slate-600/75" v-if="displayOverlay"></div>
+  <div
+    class="absolute w-full h-full z-10 bg-slate-600/75"
+    v-if="displayOverlay"
+  ></div>
   <div class="flex flex-col items-center w-full">
     <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
-    <new-task v-if="displayOverlay" @createTask="createTask" @close="cleanTaskForm" />
+    <new-task
+      v-if="displayOverlay"
+      @createTask="createTask"
+      @close="cleanTaskForm"
+    />
     <div class="flex gap-6">
       <KanbanColumn
         :tasks="todo"
@@ -55,7 +62,7 @@ export default {
       projectName: "",
       displayOverlay: false,
       taskStatus: "todo",
-      taskName: ""
+      taskName: "",
     };
   },
   created() {
@@ -75,28 +82,32 @@ export default {
   },
   methods: {
     increaseStatus(id) {
-      let currentStatus = this.kanban[id].status;
+      let selectedKanban = this.kanban.find((k) => k.id === id);
+      let currentStatus = selectedKanban.status;
 
       if (currentStatus === "done") {
         return;
       }
       if (currentStatus === "inProgress") {
-        this.kanban[id].status = "done";
+        selectedKanban.status = "done";
       } else if (currentStatus === "todo") {
-        this.kanban[id].status = "inProgress";
+        selectedKanban.status = "inProgress";
       }
+      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
     },
     decreaseStatus(id) {
-      let currentStatus = this.kanban[id].status;
+      let selectedKanban = this.kanban.find((k) => k.id === id);
+      let currentStatus = selectedKanban.status;
 
       if (currentStatus === "todo") {
         return;
       }
       if (currentStatus === "inProgress") {
-        this.kanban[id].status = "todo";
+        selectedKanban.status = "todo";
       } else if (currentStatus === "done") {
-        this.kanban[id].status = "inProgress";
+        selectedKanban.status = "inProgress";
       }
+      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
     },
     displayNewTaskOverlay() {
       this.displayOverlay = true;
