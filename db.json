@@ -51,10 +51,9 @@
       "inspiration": "Full Stack Helsinki Open Course 2022",
       "tags": [
         "React",
-        "CRUD",
-        "Functional Components"
+        "CRUD"
       ],
-      "progress": 0,
+      "percentage": 0,
       "dateOfCreation": "15-04-2022",
       "id": 3
     }

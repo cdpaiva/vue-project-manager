@@ -1,7 +1,29 @@
 <template>
-  <h2>Edit</h2>
   <div class="flex flex-col items-center">
-    <form class="w-full max-w-lg">
+    <h2 class="uppercase font-bold text-2xl m-12">Edit Project</h2>
+    <div
+      class="
+        bg-green-200
+        border-2
+        rounded
+        border-green-700
+        text-green-800
+        w-full
+        max-w-2xl
+        p-2
+        m-2
+      "
+      v-if="displayMessage"
+    >
+      <div class="flex justify-between">
+        <p>Project successfully updated</p>
+        <button @click="displayMessage = false">X</button>
+      </div>
+      <button class="underline hover:font-bold" @click="$router.push('/')">
+        Return to Homepage
+      </button>
+    </div>
+    <form class="w-full max-w-2xl">
       <div>
         <label class="block uppercase text-gray-700 font-bold mb-2" for="name"
           >Project Name</label
@@ -80,10 +102,13 @@
           Add tag
         </button>
       </div>
-      <div>
-        <p v-for="t in tags" :key="t">
-          {{ t }} <button @click.prevent="removeTag(t)">X</button>
-        </p>
+      <div class="flex flex-wrap gap-4 m-4">
+        <div v-for="t in tags" :key="t">
+          <Tag class="inline" :name="t" />
+          <button class="text-red-500 font-bold" @click.prevent="removeTag(t)">
+            X
+          </button>
+        </div>
       </div>
       <div>
         <label class="block uppercase text-gray-700 font-bold mb-2" for="date"
@@ -98,42 +123,54 @@
         />
       </div>
     </form>
-    <button
-      class="
-        bg-white
-        border-2 border-gray-700
-        rounded
-        text-lg
-        px-4
-        py-3
-        mt-4
-        hover:bg-slate-500 hover:text-white hover:border-slate-500
-      "
-      @click.prevent="updateProject"
-    >
-      Update project
-    </button>
-    <div>
-      <p>Project being created with:</p>
-      {{ name }}
-      {{ outline }}
-      {{ description }}
-      {{ inspiration }}
-      {{ tags }}
-      {{ dateOfCreation }}
+    <div class="flex gap-6">
+      <button
+        class="
+          bg-blue-700
+          border-2 border-gray-700
+          rounded
+          text-lg text-white
+          px-4
+          py-3
+          mt-4
+          hover:bg-slate-500 hover:text-white hover:border-slate-500
+        "
+        @click.prevent="updateProject"
+      >
+        Update project
+      </button>
+      <button
+        class="
+          bg-white
+          border-2 border-gray-700
+          rounded
+          text-lg
+          px-4
+          py-3
+          mt-4
+          hover:bg-slate-500 hover:text-white hover:border-slate-500
+        "
+        @click="$router.push('/')"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import projectService from '../service/projects.js'
+import projectService from "../service/projects.js";
+import Tag from "../components/Tag.vue";
 
 export default {
+  components: {
+    Tag,
+  },
   props: {
     id: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -143,20 +180,21 @@ export default {
       inspiration: "",
       tag: "",
       tags: "",
-      dateOfCreation: ""
+      dateOfCreation: "",
+      displayMessage: false
     };
   },
   mounted() {
-    projectService.getById(this.id).then(p => this.fillForm(p))
+    projectService.getById(this.id).then((p) => this.fillForm(p));
   },
   methods: {
     fillForm(project) {
-      this.name = project.name
-      this.outline = project.outline
-      this.description = project.description
-      this.inspiration = project.inspiration
-      this.tags = project.tags
-      this.dateOfCreation = project.dateOfCreation
+      this.name = project.name;
+      this.outline = project.outline;
+      this.description = project.description;
+      this.inspiration = project.inspiration;
+      this.tags = project.tags;
+      this.dateOfCreation = project.dateOfCreation;
     },
     addTag() {
       this.tags.push(this.tag);
@@ -176,7 +214,10 @@ export default {
         percentage: 0,
         dateOfCreation: this.dateOfCreation,
       };
-      projectService.update(this.id, project)
+      projectService.update(this.id, project).then(() => this.toggleDisplayMessage());
+    },
+    toggleDisplayMessage() {
+      this.displayMessage = !this.displayMessage;
     },
   },
 };
