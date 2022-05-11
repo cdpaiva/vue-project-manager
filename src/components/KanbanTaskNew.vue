@@ -4,24 +4,23 @@
       absolute
       left-1/4
       top-1/4
-      border-slate-900 border-2
-      bg-slate-200
+      bg-white
       w-1/2
       p-2
       z-20
     "
   >
-    <h3 class="text-center font-extrabold text-2xl text-gray-700">
+    <h3 class="text-center font-bold text-2xl">
       Add new task
     </h3>
     <form>
-      <label for="task" class="block uppercase text-gray-700 font-bold mb-2"
+      <label for="task" class="label"
         >Task Name</label
       >
-      <input class="w-full h-8 mb-2" type="text" id="task" v-model="taskName" />
+      <input class="input" type="text" id="task" v-model="taskName" />
       <div class="block">
-        <p class="mb-2">Status of the task:</p>
-        <label for="todo" class="uppercase text-gray-700 font-bold my-2 mr-1">
+        <p class="label mb-4">Status of the task:</p>
+        <label for="todo" class="mr-2">
           Todo</label
         >
         <input
@@ -33,7 +32,7 @@
         />
         <label
           for="inProgress"
-          class="uppercase text-gray-700 font-bold my-2 ml-4 mr-1"
+          class="ml-4 mr-2"
         >
           In Progress</label
         >
@@ -46,7 +45,7 @@
         />
         <label
           for="done"
-          class="uppercase text-gray-700 font-bold my-2 ml-4 mr-1"
+          class="ml-4 mr-2"
         >
           Done</label
         >
@@ -60,29 +59,13 @@
       </div>
       <div class="flex justify-center gap-8 mt-4">
         <button
-          class="
-            border-slate-900 border-2
-            text-slate
-            font-bold
-            py-1
-            px-2
-            rounded
-            hover:bg-slate-500
-          "
+          class="bg-white border-2 border-slate-400 py-2 px-3 ml-4 hover:bg-slate-200 hover:border-orange-500"
           @click="createTask"
         >
           Create Task
         </button>
         <button
-          class="
-            border-slate-900 border-2
-            text-slate
-            font-bold
-            py-1
-            px-2
-            rounded
-            hover:bg-slate-500
-          "
+          class="bg-white border-2 border-slate-400 py-2 px-3 ml-4 hover:bg-slate-200"
           @click="$emit('close')"
         >
           Cancel

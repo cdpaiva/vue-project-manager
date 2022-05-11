@@ -4,51 +4,82 @@
     v-if="displayOverlay"
   ></div>
   <div class="flex flex-col items-center w-full">
-    <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
-    <new-task
+    <h1 class="text-3xl m-4">Kanban board for {{ projectName }}</h1>
+    <KanbanTaskNew
       v-if="displayOverlay"
       @createTask="createTask"
       @close="cleanTaskForm"
     />
-    <div class="flex gap-6">
-      <KanbanColumn
-        :tasks="todo"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >Todo</KanbanColumn
-      >
-      <KanbanColumn
-        :tasks="inProgress"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >In Progress</KanbanColumn
-      >
-      <KanbanColumn
-        :tasks="done"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >Done</KanbanColumn
-      >
+    <button
+      class="text-center border-solid border-2 border-slate-400 py-2 w-1/5 min-w-fit hover:bg-slate-200 hover:border-orange-500 mb-4"
+      @click="displayNewTaskOverlay"
+    >
+      Add new task
+    </button>
+    <div class="flex gap-6 justify-center w-full">
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">To Do</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          :list="todo"
+          group="tasks"
+          item-key="id"
+          @change="statusTodo"
+        >
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask" />
+        </template>
+        </draggable>
+      </div>
+
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">In Progress</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          :list="inProgress"
+          item-key="id"
+          group="tasks"
+          @change="statusInprogress"
+        >
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask"/>
+        </template>
+        </draggable>
+      </div>
+
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">Done</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          :list="done"
+          item-key="id"
+          group="tasks"
+          @change="statusDone"
+        >
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask"/>
+        </template>
+        </draggable>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import KanbanColumn from "../components/KanbanColumn.vue";
-import NewTask from "../components/NewTask.vue";
+import KanbanTaskNew from "../components/KanbanTaskNew.vue";
 import taskService from "../service/tasks";
 import projectService from "../service/projects";
+import draggable from "vuedraggable";
+import KanbanTask from "../components/KanbanTask.vue";
 
 export default {
   components: {
-    KanbanColumn,
-    NewTask,
+    KanbanTaskNew,
+    draggable,
+    KanbanTask,
   },
   props: {
     id: {
@@ -65,49 +96,51 @@ export default {
       taskName: "",
     };
   },
+  computed: {
+    todo() {
+      return this.kanban.filter((t) => t.status === "todo");
+    },
+    inProgress() {
+      return this.kanban.filter((t) => t.status === "inProgress");
+    },
+    done() {
+      return this.kanban.filter((t) => t.status === "done");
+    },
+  },
   created() {
     taskService.getByProjectId(this.id).then((k) => (this.kanban = k));
     projectService.getById(this.id).then((p) => (this.projectName = p.name));
   },
-  computed: {
-    todo() {
-      return this.kanban.filter((k) => k.status === "todo");
-    },
-    inProgress() {
-      return this.kanban.filter((k) => k.status === "inProgress");
-    },
-    done() {
-      return this.kanban.filter((k) => k.status === "done");
-    },
-  },
   methods: {
-    increaseStatus(id) {
-      let selectedKanban = this.kanban.find((k) => k.id === id);
-      let currentStatus = selectedKanban.status;
-
-      if (currentStatus === "done") {
-        return;
+    statusTodo(e) {
+      if (e.added) {
+        const task = e.added.element;
+        task["status"] = "todo";
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
-      if (currentStatus === "inProgress") {
-        selectedKanban.status = "done";
-      } else if (currentStatus === "todo") {
-        selectedKanban.status = "inProgress";
-      }
-      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
     },
-    decreaseStatus(id) {
-      let selectedKanban = this.kanban.find((k) => k.id === id);
-      let currentStatus = selectedKanban.status;
-
-      if (currentStatus === "todo") {
-        return;
+    statusInprogress(e) {
+      if (e.added) {
+        const task = e.added.element;
+        task["status"] = "inProgress";
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
-      if (currentStatus === "inProgress") {
-        selectedKanban.status = "todo";
-      } else if (currentStatus === "done") {
-        selectedKanban.status = "inProgress";
+    },
+    statusDone(e) {
+      if (e.added) {
+        const task = e.added.element;
+        task["status"] = "done";
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
-      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
+    },
+    updateKanbanOrder(id) {
+      this.kanban = [
+        ...this.kanban.filter((t) => t.id !== id),
+        this.kanban.find((t) => t.id === id),
+      ];
     },
     displayNewTaskOverlay() {
       this.displayOverlay = true;
@@ -125,10 +158,18 @@ export default {
       });
     },
     removeTask(id) {
-      taskService
-        .remove(id)
-        .then(() => (this.kanban = this.kanban.filter((k) => k.id !== id)));
+      if (confirm("Please confirm you want to delete this task:")) {
+        taskService
+          .remove(id)
+          .then(() => (this.kanban = this.kanban.filter((k) => k.id !== id)));
+      }
     },
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+  .title {
+    @apply text-center text-2xl py-2 font-bold
+  }
+</style>
