@@ -27,9 +27,9 @@
           item-key="id"
           @change="statusTodo"
         >
-          <template #item="{ element }">
-            <kanban-task :task="element" @removeTask="removeTask" />
-          </template>
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask" />
+        </template>
         </draggable>
       </div>
 
@@ -43,9 +43,9 @@
           group="tasks"
           @change="statusInprogress"
         >
-          <template #item="{ element }">
-            <kanban-task :task="element" @removeTask="removeTask"/>
-          </template>
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask"/>
+        </template>
         </draggable>
       </div>
 
@@ -59,9 +59,9 @@
           group="tasks"
           @change="statusDone"
         >
-          <template #item="{ element }">
-            <kanban-task :task="element" @removeTask="removeTask"/>
-          </template>
+        <template #item="{ element }">
+          <kanban-task :task="element" @removeTask="removeTask"/>
+        </template>
         </draggable>
       </div>
     </div>
@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import KanbanColumn from "../components/KanbanColumn.vue";
 import KanbanTaskNew from "../components/KanbanTaskNew.vue";
 import taskService from "../service/tasks";
 import projectService from "../service/projects";
@@ -78,7 +77,6 @@ import KanbanTask from "../components/KanbanTask.vue";
 
 export default {
   components: {
-    KanbanColumn,
     KanbanTaskNew,
     draggable,
     KanbanTask,
