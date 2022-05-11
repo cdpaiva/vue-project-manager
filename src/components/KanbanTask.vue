@@ -22,18 +22,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.btn-cancel {
-  @apply border-yellow-500 border-2 font-bold py-1 px-2 rounded;
-}
-.btn-cancel:hover {
-  @apply hover:bg-yellow-500 text-white;
-}
-.btn {
-  @apply border-blue-700 border-2 font-bold py-1 px-2 rounded;
-}
-.btn:hover {
-  @apply hover:bg-blue-700 text-white;
-}
-</style>

@@ -59,13 +59,13 @@
       </div>
       <div class="flex justify-center gap-8 mt-4">
         <button
-          class="bg-white border-2 border-slate-700 py-2 px-3 ml-4 hover:bg-slate-400"
+          class="bg-white border-2 border-slate-400 py-2 px-3 ml-4 hover:bg-slate-200 hover:border-orange-500"
           @click="createTask"
         >
           Create Task
         </button>
         <button
-          class="bg-white border-2 border-slate-700 py-2 px-3 ml-4 hover:bg-slate-400"
+          class="bg-white border-2 border-slate-400 py-2 px-3 ml-4 hover:bg-slate-200"
           @click="$emit('close')"
         >
           Cancel

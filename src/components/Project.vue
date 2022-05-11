@@ -2,7 +2,7 @@
   <div class="border-b-2 border-slate-200 p-4 p w-full last:border-0">
     <div class="flex">
       <div class="flex-grow">
-        <router-link class="text-3xl hover:underline decoration-yellow-500" :to="`/kanban/${project.id}`">{{
+        <router-link class="text-3xl hover:underline decoration-orange-500" :to="`/kanban/${project.id}`">{{
           project.name
         }}</router-link>
         <p>{{ project.outline }}</p>
@@ -12,33 +12,17 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="flex-1">
-        <div class="h-full flex flex-col justify-between">
-          <div class="flex justify-end gap-2">
-            <router-link :to="`/edit-project/${project.id}`" class="btn"
-              >Edit</router-link
-            >
-            <button class="btn" @click="remove(project.id)">Delete</button>
-          </div>
-          <div class="flex justify-end">
-            <button class="btn-blue" @click="showDetails = !showDetails">
-              {{ showDetails ? "Hide" : "" }} Details
-            </button>
-          </div>
-        </div>
-      </div> -->
-        <div class="flex justify-end items-center">
-          
-            <router-link :to="`/edit-project/${project.id}`" class="btn"
-              >Edit</router-link
-            >
-            <button class="btn" @click="remove(project.id)">Delete</button>
-          
-            <button class="btn" @click="showDetails = !showDetails">
-              {{ showDetails ? "Hide Details ↰" : "Details ↴" }}
-            </button>
-        </div>
+      <div class="flex justify-end items-center">
+          <router-link :to="`/edit-project/${project.id}`" class="btn"
+            >Edit</router-link
+          >
+          <button class="btn" @click="remove(project.id)">
+            Delete
+          </button>
+          <button class="btn" @click="showDetails = !showDetails">
+            {{ showDetails ? "Hide Details ↰" : "Details ↴" }}
+          </button>
+      </div>
     </div>
 
     <div class="m-2" v-if="showDetails">
@@ -80,9 +64,9 @@ export default {
 
 <style lang="postcss" scoped>
 .btn {
-  @apply text-blue-600 px-3;
+  @apply text-blue-600 text-lg px-3;
 }
 .btn:hover {
-  @apply underline decoration-yellow-500 decoration-2;
+  @apply underline decoration-orange-500 decoration-2;
 }
 </style>

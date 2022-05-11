@@ -58,7 +58,7 @@
       <div>
         <label class="label" for="tag">Tags</label>
         <input
-          class="w-3/4 border-2 border-white border-b-slate-300 mb-2 p-2 focus:bg-white focus:border-b-white"
+          class="w-3/4 border-2 border-white border-b-slate-300 mb-2 p-2 focus:border-orange-500 focus:outline-none"
           type="text"
           name="tag"
           id="tag"
@@ -66,7 +66,7 @@
         />
         <button
           @click.prevent="addTag"
-          class="w-1/5 bg-white border-2 border-slate-400 py-2 ml-4 hover:border-slate-700 hover:bg-slate-400">
+          class="w-1/5 bg-white border-2 border-slate-400 py-2 ml-4 hover:border-orange-500 hover:bg-slate-200">
           Add tag
         </button>
       </div>
@@ -83,7 +83,7 @@
       <div>
         <label class="label" for="date">Date of Creation</label>
         <input
-          class="block bg-slate-200 mb-2 p-2"
+          class="block bg-slate-200 mb-2 p-2 focus:border-orange-500 focus:outline-none"
           type="date"
           name="date"
           id="date"
@@ -93,13 +93,13 @@
     </form>
     <div class="flex gap-6">
       <button
-        class="bg-white border-2 border-slate-700 py-3 px-4 ml-4 hover:bg-slate-400"
+        class="bg-white border-2 border-slate-700 py-3 px-4 ml-4 hover:border-orange-500 hover:bg-slate-200"
         @click.prevent="createProject"
       >
         Create project
       </button>
       <button
-        class="bg-white border-2 border-slate-700 py-3 px-4 hover:bg-slate-400"
+        class="bg-white border-2 border-slate-700 py-3 px-4 hover:bg-slate-200"
         @click="$router.push('/')"
       >
         Cancel

@@ -25,6 +25,6 @@ export default {
   }
 
   .input {
-    @apply block w-full border-2 border-white border-b-slate-300 mb-4 p-2 focus:bg-white focus:border-b-white;
+    @apply block w-full border-2 border-white border-b-slate-300 mb-4 p-2 focus:bg-white focus:border-orange-500 focus:outline-none;
   }
 </style>

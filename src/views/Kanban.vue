@@ -11,7 +11,7 @@
       @close="cleanTaskForm"
     />
     <button
-      class="text-center border-solid border-2 border-slate-400 py-2 w-1/5 min-w-fit hover:bg-slate-400 hover:border-slate-700 mb-4"
+      class="text-center border-solid border-2 border-slate-400 py-2 w-1/5 min-w-fit hover:bg-slate-200 hover:border-orange-500 mb-4"
       @click="displayNewTaskOverlay"
     >
       Add new task
