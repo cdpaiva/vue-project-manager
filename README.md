@@ -1,5 +1,7 @@
 # Vue Project Manager
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/399520b2-4d6b-4f9d-8d44-e589d60cf2d2/deploy-status)](https://comfy-kataifi-76e8cd.netlify.app/#/)
+
 ## Description
 
 Vue Project Manager is an app to both display projects and to keep track of them.
