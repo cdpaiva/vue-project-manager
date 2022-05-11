@@ -20,6 +20,9 @@ const create = (task) =>
 const remove = (id) => 
     axios.delete(`${baseURL}/${id}`)
 
-const taskService = { getById, getByProjectId, create, remove }
+const update = (id,updatedTask) =>
+    axios.put(`${baseURL}/${id}`,updatedTask)    
+
+const taskService = { getById, getByProjectId, create, remove, update }
 
 export default taskService

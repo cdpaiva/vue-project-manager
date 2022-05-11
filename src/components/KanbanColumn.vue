@@ -4,41 +4,39 @@
       <slot></slot>
       <button @click="displayNewTaskOverlay">Add new</button>
     </div>
-    <div v-for="(task, index) in tasks" :key="index">
-      <KanbanTask :task=task @increase-status="increaseStatus" @decrease-status="decreaseStatus" @removeTask="removeTask" />
-    </div>
+    <draggable :list="tasks" item-key="index" group="cilantro">
+      <div v-for="(task, index) in tasks" :key="index">
+        <p>{{task}}</p>
+      </div>
+    </draggable>
   </div>
 </template>
 
 <script>
 import KanbanTask from "./KanbanTask.vue";
+import draggable from "vuedraggable";
 
 export default {
   components: {
     KanbanTask,
+    draggable,
   },
   props: {
     tasks: Array,
   },
   emits: [
-    'increaseStatus',
-    'decreaseStatus',
-    'displayNewTaskOverlay',
-    'removeTask'
+    "increaseStatus",
+    "decreaseStatus",
+    "displayNewTaskOverlay",
+    "removeTask",
   ],
   methods: {
-    increaseStatus(id) {
-      this.$emit("increaseStatus", id)
-    },
-    decreaseStatus(id) {
-      this.$emit("decreaseStatus", id)
-    },
     displayNewTaskOverlay() {
-      this.$emit("displayNewTaskOverlay")
+      this.$emit("displayNewTaskOverlay");
     },
     removeTask(id) {
-      this.$emit("removeTask", id)
-    }
-  }
+      this.$emit("removeTask", id);
+    },
+  },
 };
 </script>

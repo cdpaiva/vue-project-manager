@@ -5,50 +5,79 @@
   ></div>
   <div class="flex flex-col items-center w-full">
     <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
-    <new-task
+    <KanbanTaskNew
       v-if="displayOverlay"
       @createTask="createTask"
       @close="cleanTaskForm"
     />
-    <div class="flex gap-6">
-      <KanbanColumn
-        :tasks="todo"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >Todo</KanbanColumn
-      >
-      <KanbanColumn
-        :tasks="inProgress"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >In Progress</KanbanColumn
-      >
-      <KanbanColumn
-        :tasks="done"
-        @increase-status="increaseStatus"
-        @decreaseStatus="decreaseStatus"
-        @displayNewTaskOverlay="displayNewTaskOverlay"
-        @removeTask="removeTask"
-        >Done</KanbanColumn
-      >
+    <button @click="displayNewTaskOverlay">Add new task</button>
+    <div class="flex gap-6 justify-center w-full">
+      <div class="border-black border-2 w-1/4">
+        <h3 class="text-center">To Do</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          drag-class="border-black"
+          :list="todo"
+          group="tasks"
+          item-key="id"
+          @change="statusTodo"
+        >
+          <template #item="{ element }">
+            <kanban-task :task="element" @removeTask="removeTask" />
+          </template>
+        </draggable>
+      </div>
+
+      <div class="border-black border-2 w-1/4">
+        <h3 class="text-center">In Progress</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          :list="inProgress"
+          item-key="id"
+          group="tasks"
+          @change="statusInprogress"
+        >
+          <template #item="{ element }">
+            <kanban-task :task="element" />
+          </template>
+        </draggable>
+      </div>
+
+      <div class="border-black border-2 w-1/4">
+        <h3 class="text-center">Done</h3>
+        <draggable
+          class="h-full"
+          :sort="false"
+          :list="done"
+          item-key="id"
+          group="tasks"
+          @change="statusDone"
+        >
+          <template #item="{ element }">
+            <kanban-task :task="element" />
+          </template>
+        </draggable>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import KanbanColumn from "../components/KanbanColumn.vue";
-import NewTask from "../components/NewTask.vue";
+import KanbanTaskNew from "../components/KanbanTaskNew.vue";
 import taskService from "../service/tasks";
 import projectService from "../service/projects";
+import draggable from "vuedraggable";
+import KanbanTask from "../components/KanbanTask.vue";
 
 export default {
   components: {
     KanbanColumn,
-    NewTask,
+    KanbanTaskNew,
+    draggable,
+    KanbanTask,
   },
   props: {
     id: {
@@ -65,49 +94,48 @@ export default {
       taskName: "",
     };
   },
+  computed: {
+    todo() {
+      return this.kanban.filter((t) => t.status === "todo");
+    },
+    inProgress() {
+      return this.kanban.filter((t) => t.status === "inProgress");
+    },
+    done() {
+      return this.kanban.filter((t) => t.status === "done");
+    },
+  },
   created() {
     taskService.getByProjectId(this.id).then((k) => (this.kanban = k));
     projectService.getById(this.id).then((p) => (this.projectName = p.name));
   },
-  computed: {
-    todo() {
-      return this.kanban.filter((k) => k.status === "todo");
-    },
-    inProgress() {
-      return this.kanban.filter((k) => k.status === "inProgress");
-    },
-    done() {
-      return this.kanban.filter((k) => k.status === "done");
-    },
-  },
   methods: {
-    increaseStatus(id) {
-      let selectedKanban = this.kanban.find((k) => k.id === id);
-      let currentStatus = selectedKanban.status;
-
-      if (currentStatus === "done") {
-        return;
+    statusTodo(e) {
+      if (e.added) {
+        const task = e.added.element
+        task["status"] = "todo";
+        this.updateKanbanOrder(task.id)
+        taskService.update(task.id,task)
       }
-      if (currentStatus === "inProgress") {
-        selectedKanban.status = "done";
-      } else if (currentStatus === "todo") {
-        selectedKanban.status = "inProgress";
-      }
-      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
     },
-    decreaseStatus(id) {
-      let selectedKanban = this.kanban.find((k) => k.id === id);
-      let currentStatus = selectedKanban.status;
-
-      if (currentStatus === "todo") {
-        return;
+    statusInprogress(e) {
+      if (e.added) {
+        const task = e.added.element
+        task["status"] = "inProgress";
+        this.updateKanbanOrder(task.id)
+        taskService.update(task.id,task)
       }
-      if (currentStatus === "inProgress") {
-        selectedKanban.status = "todo";
-      } else if (currentStatus === "done") {
-        selectedKanban.status = "inProgress";
+    },
+    statusDone(e) {
+      if (e.added) {
+        const task = e.added.element
+        task["status"] = "done";
+        this.updateKanbanOrder(task.id)
+        taskService.update(task.id,task)
       }
-      this.kanban = [selectedKanban, ...this.kanban.filter((k) => k.id !== id)];
+    },
+    updateKanbanOrder(id) {
+      this.kanban = [...this.kanban.filter(t => t.id !== id),this.kanban.find(t => t.id === id)]
     },
     displayNewTaskOverlay() {
       this.displayOverlay = true;
