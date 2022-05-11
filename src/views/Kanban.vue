@@ -4,25 +4,24 @@
     v-if="displayOverlay"
   ></div>
   <div class="flex flex-col items-center w-full">
-    <h1 class="text-2xl m-4">Kanban board for {{ projectName }}</h1>
+    <h1 class="text-3xl m-4">Kanban board for {{ projectName }}</h1>
     <KanbanTaskNew
       v-if="displayOverlay"
       @createTask="createTask"
       @close="cleanTaskForm"
     />
     <button
-      class="border-black border-2 px-3 py-2 mb-2 hover:bg-slate-400"
+      class="text-center border-solid border-2 border-slate-400 py-2 w-1/5 min-w-fit hover:bg-slate-400 hover:border-slate-700 mb-4"
       @click="displayNewTaskOverlay"
     >
       Add new task
     </button>
     <div class="flex gap-6 justify-center w-full">
-      <div class="border-black border-2 w-1/4">
-        <h3 class="text-center">To Do</h3>
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">To Do</h3>
         <draggable
           class="h-full"
           :sort="false"
-          drag-class="border-black"
           :list="todo"
           group="tasks"
           item-key="id"
@@ -34,8 +33,8 @@
         </draggable>
       </div>
 
-      <div class="border-black border-2 w-1/4">
-        <h3 class="text-center">In Progress</h3>
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">In Progress</h3>
         <draggable
           class="h-full"
           :sort="false"
@@ -50,8 +49,8 @@
         </draggable>
       </div>
 
-      <div class="border-black border-2 w-1/4">
-        <h3 class="text-center">Done</h3>
+      <div class="bg-slate-100 w-1/4">
+        <h3 class="title">Done</h3>
         <draggable
           class="h-full"
           :sort="false"
@@ -170,3 +169,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+  .title {
+    @apply text-center text-2xl py-2 font-bold
+  }
+</style>
