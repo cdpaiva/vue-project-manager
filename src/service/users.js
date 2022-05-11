@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 'http://localhost:3001/user'
+const baseURL = 'https://light-fantastic-mask.glitch.me//user'
 
 const get = () =>
     axios

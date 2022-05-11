@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 'http://localhost:3001/tasks'
+const baseURL = 'https://light-fantastic-mask.glitch.me/tasks'
 
 const getById = (id) => 
     axios

@@ -1,7 +1,7 @@
 import axios from "axios"
 import taskService from "./tasks"
 
-const baseURL = 'http://localhost:3001/projects'
+const baseURL = 'https://light-fantastic-mask.glitch.me/projects'
 
 const getAll = () => 
     axios
