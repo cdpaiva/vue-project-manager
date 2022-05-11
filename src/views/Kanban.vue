@@ -10,7 +10,12 @@
       @createTask="createTask"
       @close="cleanTaskForm"
     />
-    <button @click="displayNewTaskOverlay">Add new task</button>
+    <button
+      class="border-black border-2 px-3 py-2 mb-2 hover:bg-slate-400"
+      @click="displayNewTaskOverlay"
+    >
+      Add new task
+    </button>
     <div class="flex gap-6 justify-center w-full">
       <div class="border-black border-2 w-1/4">
         <h3 class="text-center">To Do</h3>
@@ -40,7 +45,7 @@
           @change="statusInprogress"
         >
           <template #item="{ element }">
-            <kanban-task :task="element" />
+            <kanban-task :task="element" @removeTask="removeTask"/>
           </template>
         </draggable>
       </div>
@@ -56,7 +61,7 @@
           @change="statusDone"
         >
           <template #item="{ element }">
-            <kanban-task :task="element" />
+            <kanban-task :task="element" @removeTask="removeTask"/>
           </template>
         </draggable>
       </div>
@@ -112,30 +117,33 @@ export default {
   methods: {
     statusTodo(e) {
       if (e.added) {
-        const task = e.added.element
+        const task = e.added.element;
         task["status"] = "todo";
-        this.updateKanbanOrder(task.id)
-        taskService.update(task.id,task)
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
     },
     statusInprogress(e) {
       if (e.added) {
-        const task = e.added.element
+        const task = e.added.element;
         task["status"] = "inProgress";
-        this.updateKanbanOrder(task.id)
-        taskService.update(task.id,task)
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
     },
     statusDone(e) {
       if (e.added) {
-        const task = e.added.element
+        const task = e.added.element;
         task["status"] = "done";
-        this.updateKanbanOrder(task.id)
-        taskService.update(task.id,task)
+        this.updateKanbanOrder(task.id);
+        taskService.update(task.id, task);
       }
     },
     updateKanbanOrder(id) {
-      this.kanban = [...this.kanban.filter(t => t.id !== id),this.kanban.find(t => t.id === id)]
+      this.kanban = [
+        ...this.kanban.filter((t) => t.id !== id),
+        this.kanban.find((t) => t.id === id),
+      ];
     },
     displayNewTaskOverlay() {
       this.displayOverlay = true;
@@ -153,9 +161,11 @@ export default {
       });
     },
     removeTask(id) {
-      taskService
-        .remove(id)
-        .then(() => (this.kanban = this.kanban.filter((k) => k.id !== id)));
+      if (confirm("Please confirm you want to delete this task:")) {
+        taskService
+          .remove(id)
+          .then(() => (this.kanban = this.kanban.filter((k) => k.id !== id)));
+      }
     },
   },
 };

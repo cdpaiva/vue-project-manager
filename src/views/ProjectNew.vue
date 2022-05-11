@@ -1,33 +1,22 @@
 <template>
   <div class="flex flex-col items-center">
-    <h2 class="uppercase font-bold text-2xl m-12">New Project</h2>
-    <div
-      class="
-        bg-green-200
-        border-2
-        rounded
-        border-green-700
-        text-green-800
-        w-full
-        max-w-2xl
-        p-2
-        m-2
-      "
-      v-if="displayMessage"
-    >
-    <div class="flex justify-between">
-      <p>Project successfully created</p>
-      <button @click="displayMessage = false">X</button>
+    <h2 class="uppercase text-slate-700 font-bold text-2xl m-12">New Project</h2>
+    <div class="notification" v-if="displayMessage">
+      <div class="flex justify-between">
+        <p>Project successfully created</p>
+        <button @click="displayMessage = false">X</button>
+      </div>
+      <button 
+        class="underline hover:font-bold" 
+        @click="$router.push('/')">
+      Return to Homepage
+      </button>
     </div>
-    <button class="underline hover:font-bold" @click="$router.push('/')">Return to Homepage</button>
-    </div>
-    <form class="w-full max-w-2xl">
+    <form class="w-3/4">
       <div>
-        <label class="block uppercase text-gray-700 font-bold mb-2" for="name"
-          >Project Name</label
-        >
+        <label class="label" for="name">Project Name</label>
         <input
-          class="block w-full bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="input"
           type="text"
           name="name"
           id="name"
@@ -35,11 +24,9 @@
         />
       </div>
       <div>
-        <label class="block uppercase text-gray-700 font-bold mb-2" for="resume"
-          >Resume</label
-        >
+        <label class="label" for="resume">Resume</label>
         <input
-          class="block w-full bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="input"
           type="text"
           name="resume"
           id="resume"
@@ -47,13 +34,9 @@
         />
       </div>
       <div>
-        <label
-          class="block uppercase text-gray-700 font-bold mb-2"
-          for="description"
-          >Description</label
-        >
+        <label class="label" for="description">Description</label>
         <input
-          class="block w-full bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="input"
           type="text"
           name="description"
           id="description"
@@ -61,13 +44,11 @@
         />
       </div>
       <div>
-        <label
-          class="block uppercase text-gray-700 font-bold mb-2"
-          for="inspiration"
-          >Where this idea came from?</label
-        >
+        <label class="label" for="inspiration">
+          Where this idea came from?
+        </label>
         <input
-          class="block w-full bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="input"
           type="text"
           name="inspiration"
           id="inspiration"
@@ -75,11 +56,9 @@
         />
       </div>
       <div>
-        <label class="block uppercase text-gray-700 font-bold mb-2" for="tag"
-          >Tags</label
-        >
+        <label class="label" for="tag">Tags</label>
         <input
-          class="w-3/4 bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="w-3/4 border-2 border-white border-b-slate-300 mb-2 p-2 focus:bg-white focus:border-b-white"
           type="text"
           name="tag"
           id="tag"
@@ -87,33 +66,24 @@
         />
         <button
           @click.prevent="addTag"
-          class="
-            w-1/5
-            bg-white
-            border-2 border-gray-700
-            rounded
-            p-2
-            ml-4
-            hover:bg-slate-500 hover:text-white hover:border-slate-500
-          "
-        >
+          class="w-1/5 bg-white border-2 border-slate-400 py-2 ml-4 hover:border-slate-700 hover:bg-slate-400">
           Add tag
         </button>
       </div>
-      <div class="flex flex-wrap gap-4 m-4 ">
+      <div class="flex flex-wrap gap-4 my-6">
         <div v-for="t in tags" :key="t">
           <Tag class="inline" :name="t" />
-          <button class="text-red-500 font-bold" @click.prevent="removeTag(t)">
+          <button 
+            class="text-red-500 font-bold" 
+            @click.prevent="removeTag(t)">
             X
           </button>
         </div>
       </div>
       <div>
-        <label class="block uppercase text-gray-700 font-bold mb-2" for="date"
-          >Date of Creation</label
-        >
+        <label class="label" for="date">Date of Creation</label>
         <input
-          class="block bg-gray-200 rounded mb-2 p-2 focus:bg-white"
+          class="block bg-slate-200 mb-2 p-2"
           type="date"
           name="date"
           id="date"
@@ -123,32 +93,13 @@
     </form>
     <div class="flex gap-6">
       <button
-        class="
-          bg-blue-700
-          border-2 border-gray-700
-          rounded
-          text-lg
-          text-white
-          px-4
-          py-3
-          mt-4
-          hover:bg-slate-500 hover:text-white hover:border-slate-500
-        "
+        class="bg-white border-2 border-slate-700 py-3 px-4 ml-4 hover:bg-slate-400"
         @click.prevent="createProject"
       >
         Create project
       </button>
       <button
-        class="
-          bg-white
-          border-2 border-gray-700
-          rounded
-          text-lg
-          px-4
-          py-3
-          mt-4
-          hover:bg-slate-500 hover:text-white hover:border-slate-500
-        "
+        class="bg-white border-2 border-slate-700 py-3 px-4 hover:bg-slate-400"
         @click="$router.push('/')"
       >
         Cancel
@@ -167,19 +118,21 @@ export default {
   },
   data() {
     return {
-      //TODO: remove initial values that are here just for debbuging
-      name: "React Project",
-      outline: "Small project using functional components",
-      description: "Creates a CRUD application for phone contacts",
-      inspiration: "Full Stack Helsinki Open Course 2022",
-      tag: "",
-      tags: ["React", "CRUD", "Functional Components"],
-      dateOfCreation: "15-04-2022",
-      displayMessage: false,
+      name:'',
+      outline:'',
+      description:'',
+      inspiration:'',
+      tag:'',
+      tags:[],
+      dateOfCreation:'',
+      displayMessage:false,
     };
   },
   methods: {
     addTag() {
+      if(!this.tag){
+        return
+      }
       this.tags.push(this.tag);
       this.tag = "";
     },
@@ -205,3 +158,17 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+  .notification {
+    @apply bg-green-200 border-2 rounded border-green-700 text-green-800 w-full max-w-2xl p-2 m-2;
+  }
+
+  .input {
+    @apply block w-full border-2 border-white border-b-slate-300 mb-4 p-2 focus:bg-white focus:border-b-white;
+  }
+
+  .label {
+    @apply block uppercase text-slate-700 font-bold;
+  }
+</style>

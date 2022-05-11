@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-slate-100 h-screen">
+  <div class="h-screen">
     <TheNav />
-    <router-view> </router-view>
+    <router-view></router-view>
   </div>
 </template>
 

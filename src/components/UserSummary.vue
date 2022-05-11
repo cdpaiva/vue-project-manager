@@ -1,7 +1,7 @@
 <template>
     <div class="m-4 flex flex-col items-center">
         
-        <h2 class="text-2xl">Welcome {{userName}}</h2>
+        <h2 class="text-3xl">Welcome {{userName}}</h2>
 
         <div class="flex gap-4">
             <stats-card text="Projects tracked" :number="numberOfProjects"/>
